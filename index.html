@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>SinoMarket BF — Espace Partenaire</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root {
+  --bg:      #07111c;
+  --bg2:     #0c1a28;
+  --card:    #0f2034;
+  --card2:   #132540;
+  --bord:    rgba(255,255,255,.07);
+  --bord2:   rgba(255,255,255,.13);
+  --blue:    #3b82f6;
+  --blue2:   #2563eb;
+  --blue-l:  rgba(59,130,246,.12);
+  --gold:    #f5a623;
+  --gold2:   #d4891a;
+  --gold-l:  rgba(245,166,35,.1);
+  --green:   #22c55e;
+  --green-l: rgba(34,197,94,.1);
+  --red:     #ef4444;
+  --red-l:   rgba(239,68,68,.1);
+  --t1:      #f0f6ff;
+  --t2:      #7a9bb5;
+  --t3:      #3d6480;
+  --hdr:     56px;
+  --nav:     64px;
+  --r:       14px;
+  --r-sm:    9px;
+  --ease:    cubic-bezier(.4,0,.2,1);
+  --spring:  cubic-bezier(.34,1.1,.64,1);
+  --s1:      0 2px 8px rgba(0,0,0,.35);
+  --s2:      0 8px 28px rgba(0,0,0,.45);
+  --s-blue:  0 4px 20px rgba(59,130,246,.22);
+  --s-gold:  0 4px 20px rgba(245,166,35,.22);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{height:100%;font-size:16px}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t1);min-height:100%;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+input,textarea,select{font-family:inherit;font-size:inherit}
+img{display:block;max-width:100%}
+
+/* SPLASH */
+#splash{position:fixed;inset:0;z-index:9999;background:radial-gradient(ellipse at 30% 40%,#091525 0%,#050d18 70%);display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;transition:opacity .6s var(--ease),visibility .6s}
+#splash.hide{opacity:0;visibility:hidden;pointer-events:none}
+.spl-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(59,130,246,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,.04) 1px,transparent 1px);background-size:52px 52px;animation:gridMove 14s linear infinite}
+@keyframes gridMove{to{background-position:52px 52px}}
+.spl-halo{position:absolute;border-radius:50%;filter:blur(90px);pointer-events:none}
+.spl-halo-1{width:500px;height:500px;top:-120px;right:-100px;background:radial-gradient(circle,rgba(59,130,246,.14),transparent 70%);animation:haloBeat 5s ease-in-out infinite}
+.spl-halo-2{width:380px;height:380px;bottom:-80px;left:-80px;background:radial-gradient(circle,rgba(245,166,35,.09),transparent 70%);animation:haloBeat 5s ease-in-out infinite reverse}
+@keyframes haloBeat{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+.spl-center{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center}
+.spl-icon{width:88px;height:88px;border-radius:26px;background:linear-gradient(145deg,#0d1e38,#142d52);border:1.5px solid rgba(59,130,246,.28);display:flex;align-items:center;justify-content:center;margin-bottom:22px;box-shadow:0 0 0 14px rgba(59,130,246,.05),0 0 50px rgba(59,130,246,.2),0 24px 50px rgba(0,0,0,.6);animation:iconPulse 2.5s ease-in-out infinite alternate}
+@keyframes iconPulse{from{box-shadow:0 0 0 14px rgba(59,130,246,.05),0 0 30px rgba(59,130,246,.15)}to{box-shadow:0 0 0 14px rgba(59,130,246,.1),0 0 60px rgba(59,130,246,.4)}}
+.spl-pre{font-size:.68rem;font-weight:600;color:rgba(255,255,255,.28);letter-spacing:.2em;text-transform:uppercase;margin-bottom:8px;animation:fadeUp .7s ease forwards;animation-delay:.2s;opacity:0}
+.spl-title{font-family:'Outfit',sans-serif;font-weight:900;font-size:2rem;color:#fff;letter-spacing:-.4px;text-align:center;animation:fadeUp .7s ease forwards;animation-delay:.4s;opacity:0}
+.spl-title span{color:var(--gold)}
+.spl-sub{font-size:.68rem;font-weight:700;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.25);padding:5px 16px;border-radius:99px;margin-top:10px;margin-bottom:28px;animation:fadeUp .7s ease forwards;animation-delay:.6s;opacity:0}
+.spl-bar-wrap{width:200px;height:2px;background:rgba(255,255,255,.05);border-radius:99px;overflow:hidden;animation:fadeUp .6s ease forwards;animation-delay:.8s;opacity:0}
+.spl-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--blue),var(--gold));border-radius:99px;box-shadow:0 0 10px rgba(59,130,246,.8);transition:width 2.8s var(--ease)}
+.spl-by{font-size:.62rem;color:rgba(255,255,255,.15);margin-top:12px;letter-spacing:.07em;animation:fadeUp .6s ease forwards;animation-delay:1s;opacity:0}
+.spl-by span{color:rgba(245,166,35,.3);font-weight:700}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+/* AUTH */
+#authScreen{position:fixed;inset:0;z-index:999;background:var(--bg);display:none;align-items:center;justify-content:center;padding:20px;overflow-y:auto}
+#authScreen.show{display:flex}
+.auth-wrap{width:100%;max-width:430px}
+.auth-brand{text-align:center;margin-bottom:0;padding:28px 24px;background:linear-gradient(160deg,#0a1c2e,#0f2438);border:1px solid var(--bord);border-bottom:none;border-radius:20px 20px 0 0;position:relative;overflow:hidden}
+.auth-brand::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 80% 20%,rgba(59,130,246,.12),transparent 55%)}
+.auth-brand-pre{font-size:.68rem;font-weight:600;color:rgba(255,255,255,.3);letter-spacing:.15em;text-transform:uppercase;margin-bottom:8px;position:relative;z-index:1}
+.auth-brand-name{font-family:'Outfit',sans-serif;font-weight:900;font-size:1.6rem;color:#fff;letter-spacing:-.4px;position:relative;z-index:1}
+.auth-brand-name span{color:var(--gold)}
+.auth-brand-badge{display:inline-block;margin-top:8px;background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.25);color:var(--blue);font-size:.64rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 14px;border-radius:99px;position:relative;z-index:1}
+.auth-card{background:var(--card);border:1px solid var(--bord);border-top:none;border-radius:0 0 20px 20px;padding:24px;box-shadow:var(--s2)}
+.auth-tabs{display:flex;gap:3px;background:rgba(255,255,255,.04);border-radius:12px;padding:4px;margin-bottom:20px}
+.auth-tab{flex:1;padding:9px;border-radius:9px;background:none;color:rgba(255,255,255,.3);font-family:'Outfit',sans-serif;font-weight:700;font-size:.8rem;cursor:pointer;transition:all .15s}
+.auth-tab.active{background:rgba(255,255,255,.09);color:#fff}
+.auth-form{display:none}
+.auth-form.active{display:block}
+.inp-group{margin-bottom:11px}
+.inp-label{display:block;font-size:.69rem;font-weight:700;color:var(--t2);margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em}
+.inp{width:100%;padding:11px 14px;background:var(--bg2);border:1.5px solid var(--bord);border-radius:10px;color:var(--t1);font-size:.85rem;transition:all .15s;outline:none}
+.inp:focus{border-color:var(--blue);background:rgba(59,130,246,.05)}
+.inp::placeholder{color:var(--t3)}
+.inp-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn-auth{width:100%;padding:13px;background:linear-gradient(135deg,var(--blue2),var(--blue));color:#fff;border:none;border-radius:12px;font-family:'Outfit',sans-serif;font-weight:800;font-size:.92rem;cursor:pointer;margin-top:6px;transition:all .15s;box-shadow:var(--s-blue)}
+.btn-auth:active{opacity:.88;transform:scale(.98)}
+.btn-auth:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
+.auth-msg{font-size:.76rem;text-align:center;margin-top:10px;min-height:18px}
+.auth-msg.err{color:#f87171}
+.auth-msg.ok{color:#4ade80}
+
+/* STEPS */
+.steps-bar{display:flex;align-items:center;margin-bottom:20px}
+.step-dot-wrap{display:flex;flex-direction:column;align-items:center;gap:3px;flex:0 0 auto}
+.step-dot{width:30px;height:30px;border-radius:50%;border:2px solid var(--bord2);background:transparent;font-family:'Outfit',sans-serif;font-weight:800;font-size:.78rem;color:var(--t3);display:flex;align-items:center;justify-content:center;transition:all .25s}
+.step-dot.active{background:var(--blue);border-color:var(--blue);color:#fff;box-shadow:0 0 12px rgba(59,130,246,.4)}
+.step-dot.done{background:var(--green);border-color:var(--green);color:#fff}
+.step-lbl{font-size:.59rem;color:var(--t3);font-weight:600}
+.step-lbl.active{color:var(--blue)}
+.step-lbl.done{color:var(--green)}
+.step-line{flex:1;height:2px;background:var(--bord2);margin:0 5px 14px;transition:background .25s}
+.step-line.done{background:var(--green)}
+.upload-zone{border:2px dashed var(--bord2);border-radius:var(--r);padding:20px;text-align:center;cursor:pointer;background:var(--bg2);transition:all .15s;margin-bottom:6px}
+.upload-zone:hover,.upload-zone.filled{border-color:var(--blue);background:var(--blue-l)}
+.upload-zone-icon{font-size:1.8rem;margin-bottom:6px}
+.upload-zone-text{font-size:.8rem;font-weight:600;color:var(--t1);margin-bottom:3px}
+.upload-zone-sub{font-size:.69rem;color:var(--t3)}
+.upload-preview{margin-top:10px}
+.upload-preview img{max-height:90px;border-radius:8px;margin:0 auto;border:1px solid var(--bord2)}
+.btn-back{padding:12px 16px;background:var(--bg2);border:1px solid var(--bord2);border-radius:10px;color:var(--t2);font-family:'Outfit',sans-serif;font-weight:600;font-size:.86rem;cursor:pointer;transition:all .15s}
+.btn-back:active{background:var(--bord)}
+.reg-success{text-align:center;padding:12px 0}
+.reg-success-icon{font-size:3.2rem;margin-bottom:14px}
+.reg-success-title{font-family:'Outfit',sans-serif;font-weight:800;font-size:1.05rem;color:var(--t1);margin-bottom:8px}
+.reg-success-text{font-size:.8rem;color:var(--t2);line-height:1.75;margin-bottom:14px}
+.reg-success-note{background:var(--gold-l);border:1px solid rgba(245,166,35,.2);border-radius:var(--r);padding:13px;font-size:.77rem;color:var(--t2);line-height:1.65}
+
+/* APP */
+#app{display:none}
+#app.show{display:block}
+.topbar{position:sticky;top:0;z-index:300;background:rgba(7,17,28,.95);backdrop-filter:blur(16px);height:var(--hdr);display:flex;align-items:center;padding:0 14px;gap:10px;border-bottom:1px solid var(--bord);width:100%}
+.topbar-logo{display:flex;align-items:center;gap:9px;font-family:'Outfit',sans-serif;font-weight:900;font-size:1.05rem;color:var(--t1);letter-spacing:-.3px;flex:1;min-width:0}
+.topbar-logo-icon{width:33px;height:33px;border-radius:10px;flex-shrink:0;background:linear-gradient(135deg,#0d1e38,#142d52);border:1px solid rgba(59,130,246,.28);display:flex;align-items:center;justify-content:center}
+.topbar-logo span{color:var(--gold)}
+.topbar-badge{font-size:.59rem;font-weight:700;color:var(--blue);background:var(--blue-l);border:1px solid rgba(59,130,246,.22);padding:3px 9px;border-radius:99px;text-transform:uppercase;letter-spacing:.07em;flex-shrink:0}
+.topbar-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.btn-logout{padding:7px 12px;background:rgba(255,255,255,.05);border:1px solid var(--bord2);border-radius:8px;color:var(--t2);font-size:.73rem;font-weight:600;cursor:pointer;transition:all .15s}
+.btn-logout:active{background:rgba(255,255,255,.1)}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:300;background:rgba(7,17,28,.97);backdrop-filter:blur(16px);height:var(--nav);display:flex;border-top:1px solid var(--bord);padding-bottom:env(safe-area-inset-bottom,0)}
+.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--t3);transition:color .15s;padding:6px 4px;font-family:inherit}
+.nav-btn svg{width:22px;height:22px;stroke:currentColor;stroke-width:1.8;fill:none}
+.nav-btn span{font-size:.59rem;font-weight:600;letter-spacing:.02em;text-transform:uppercase}
+.nav-btn.active{color:var(--gold)}
+.nav-btn.active svg{stroke:var(--gold)}
+.page{display:none}
+.page.active{display:block}
+.content{padding:16px 14px calc(var(--nav) + 16px);max-width:680px;margin:0 auto}
+
+/* SECTION */
+.sec-head{margin-bottom:16px}
+.sec-title{font-family:'Outfit',sans-serif;font-weight:800;font-size:1.1rem;color:var(--t1);margin-bottom:3px;letter-spacing:-.2px}
+.sec-sub{font-size:.77rem;color:var(--t2)}
+
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px}
+.stat-card{background:var(--card);border:1px solid var(--bord);border-radius:var(--r);padding:16px;box-shadow:var(--s1)}
+.stat-card-icon{font-size:1.4rem;margin-bottom:8px}
+.stat-card-val{font-family:'Outfit',sans-serif;font-weight:900;font-size:1.45rem;color:var(--gold);display:block;letter-spacing:-.3px}
+.stat-card-lbl{font-size:.72rem;color:var(--t2);margin-top:2px}
+
+/* CMD CARD */
+.cmd-card{background:var(--card);border:1px solid var(--bord);border-radius:var(--r);padding:15px;margin-bottom:10px;box-shadow:var(--s1);transition:border-color .15s}
+.cmd-card:hover{border-color:var(--bord2)}
+.cmd-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:8px}
+.cmd-ref{font-family:'Outfit',sans-serif;font-weight:800;font-size:.84rem;color:var(--gold)}
+.cmd-date{font-size:.69rem;color:var(--t3)}
+.cmd-client{font-weight:600;font-size:.86rem;color:var(--t1);margin-bottom:6px}
+.cmd-items{font-size:.76rem;color:var(--t2);margin-bottom:10px;line-height:1.5}
+.cmd-meta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.cmd-tag{padding:3px 10px;background:var(--bg2);border-radius:99px;font-size:.69rem;font-weight:600;color:var(--t2);border:1px solid var(--bord)}
+.cmd-total{font-family:'Outfit',sans-serif;font-weight:900;font-size:1rem;color:var(--t1);margin-bottom:12px}
+.cmd-total span{font-size:.73rem;color:var(--t3);font-weight:400}
+.statut-pill{padding:4px 11px;border-radius:99px;font-size:.67rem;font-weight:700;letter-spacing:.03em}
+.s-attente{background:rgba(245,166,35,.12);color:#fbbf24}
+.s-confirme{background:var(--blue-l);color:#60a5fa}
+.s-preparation{background:rgba(167,139,250,.12);color:#a78bfa}
+.s-expedie{background:var(--green-l);color:#4ade80}
+.s-livre{background:var(--green-l);color:var(--green)}
+.s-annule{background:var(--red-l);color:var(--red)}
+
+/* PAIEMENT */
+.paiement-box{background:var(--bg2);border-radius:var(--r-sm);padding:12px;border:1px solid var(--bord);margin-top:2px}
+.paiement-box-label{font-size:.67rem;font-weight:800;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;display:block}
+.prix-row{display:flex;gap:8px;margin-bottom:0}
+.prix-inp{flex:1;padding:9px 12px;background:var(--card);border:1.5px solid var(--bord2);border-radius:var(--r-sm);color:var(--t1);font-size:.83rem;outline:none;transition:border-color .15s}
+.prix-inp:focus{border-color:var(--gold)}
+.btn-send-wa{padding:0 14px;border-radius:var(--r-sm);background:linear-gradient(135deg,var(--gold2),var(--gold));color:#000;font-family:'Outfit',sans-serif;font-weight:800;font-size:.78rem;cursor:pointer;transition:all .15s;white-space:nowrap;flex-shrink:0;border:none;box-shadow:var(--s-gold)}
+.btn-send-wa:active{opacity:.88;transform:scale(.97)}
+.statut-select{width:100%;padding:9px 12px;background:var(--card);border:1.5px solid var(--bord2);border-radius:var(--r-sm);color:var(--t1);font-size:.82rem;cursor:pointer;outline:none;transition:border-color .15s;margin-bottom:8px}
+.statut-select:focus{border-color:var(--blue)}
+.btn-update-statut{width:100%;padding:10px;background:var(--green-l);border:1px solid rgba(34,197,94,.28);border-radius:var(--r-sm);color:var(--green);font-family:'Outfit',sans-serif;font-weight:700;font-size:.81rem;cursor:pointer;transition:all .15s}
+.btn-update-statut:active{background:rgba(34,197,94,.2);transform:scale(.98)}
+.btn-update-statut:disabled{opacity:.38;cursor:not-allowed}
+
+/* EQUIPE */
+.referral-box{background:var(--card);border:1px solid var(--bord);border-radius:var(--r);padding:16px;margin-bottom:14px;box-shadow:var(--s1)}
+.referral-box-title{font-family:'Outfit',sans-serif;font-weight:800;font-size:.92rem;margin-bottom:4px;color:var(--t1)}
+.referral-box-sub{font-size:.76rem;color:var(--t2);margin-bottom:14px}
+.referral-link-wrap{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+.referral-link{flex:1;padding:10px 13px;background:var(--bg2);border:1.5px solid var(--bord2);border-radius:var(--r-sm);color:var(--blue);font-size:.78rem;font-weight:600;word-break:break-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.btn-copy{padding:10px 14px;border-radius:var(--r-sm);background:var(--blue-l);border:1px solid rgba(59,130,246,.25);color:var(--blue);font-family:'Outfit',sans-serif;font-weight:700;font-size:.78rem;cursor:pointer;transition:all .15s;white-space:nowrap;flex-shrink:0}
+.btn-copy:active{background:rgba(59,130,246,.22)}
+.btn-share-wa{width:100%;padding:11px;background:#25D366;border:none;border-radius:var(--r-sm);color:#fff;font-family:'Outfit',sans-serif;font-weight:700;font-size:.83rem;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:7px;box-shadow:0 4px 14px rgba(37,211,102,.2)}
+.btn-share-wa:active{opacity:.88}
+.membre-card{background:var(--card);border:1px solid var(--bord);border-radius:var(--r);padding:13px;margin-bottom:8px;display:flex;align-items:center;gap:12px;box-shadow:var(--s1)}
+.membre-av{width:42px;height:42px;border-radius:12px;flex-shrink:0;background:linear-gradient(135deg,var(--blue2),var(--blue));display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-weight:900;font-size:1rem;color:#fff}
+.membre-name{font-weight:700;font-size:.85rem;color:var(--t1);margin-bottom:2px}
+.membre-meta{font-size:.72rem;color:var(--t2)}
+.membre-badge{margin-left:auto;flex-shrink:0;font-family:'Outfit',sans-serif;font-weight:800;font-size:.75rem;color:var(--gold);background:var(--gold-l);border:1px solid rgba(245,166,35,.2);padding:4px 10px;border-radius:99px}
+
+/* PROFIL */
+.profil-header{background:linear-gradient(160deg,#071424,#0c1e30);border-bottom:1px solid var(--bord);padding:24px 16px 20px}
+.profil-av-wrap{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.profil-av{width:58px;height:58px;border-radius:16px;flex-shrink:0;background:linear-gradient(135deg,var(--blue2),var(--blue));display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-weight:900;font-size:1.4rem;color:#fff;box-shadow:var(--s-blue)}
+.profil-name{font-family:'Outfit',sans-serif;font-weight:800;font-size:1rem;color:var(--t1);margin-bottom:3px;letter-spacing:-.2px}
+.profil-email{font-size:.74rem;color:var(--t2)}
+.profil-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0;background:var(--card2);border-radius:var(--r);border:1px solid var(--bord);overflow:hidden}
+.profil-stat{padding:13px 8px;text-align:center}
+.profil-stat+.profil-stat{border-left:1px solid var(--bord)}
+.profil-stat-val{display:block;font-family:'Outfit',sans-serif;font-weight:800;font-size:1.1rem;color:var(--gold)}
+.profil-stat-lbl{font-size:.63rem;color:var(--t2);margin-top:2px}
+.profil-section{padding:14px}
+.profil-card{background:var(--card);border:1px solid var(--bord);border-radius:var(--r);padding:15px;margin-bottom:10px;box-shadow:var(--s1)}
+.profil-card-title{font-family:'Outfit',sans-serif;font-weight:800;font-size:.9rem;color:var(--t1);margin-bottom:3px}
+.profil-card-sub{font-size:.74rem;color:var(--t2);margin-bottom:12px}
+.profil-menu-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--bord);cursor:pointer;transition:opacity .12s}
+.profil-menu-item:last-child{border-bottom:none}
+.profil-menu-item:active{opacity:.7}
+.profil-menu-icon{width:36px;height:36px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1rem}
+.profil-menu-title{font-size:.84rem;font-weight:700;color:var(--t1)}
+.profil-menu-sub{font-size:.7rem;color:var(--t2);margin-top:1px}
+.profil-menu-arrow{color:var(--t3);font-size:.9rem;margin-left:auto}
+.btn-logout-full{width:calc(100% - 28px);margin:0 14px 14px;padding:13px;border-radius:var(--r);background:var(--card);border:1px solid rgba(239,68,68,.25);color:var(--red);font-family:inherit;font-weight:700;font-size:.86rem;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:7px}
+.btn-logout-full:active{background:var(--red-l)}
+
+/* FILTER */
+.filter-btn{flex-shrink:0;padding:6px 14px;border-radius:99px;font-size:.75rem;font-weight:700;white-space:nowrap;background:var(--card);color:var(--t2);border:1.5px solid var(--bord2);cursor:pointer;transition:all .15s}
+.filter-btn.active{background:var(--blue);color:#fff;border-color:var(--blue);box-shadow:var(--s-blue)}
+
+/* EMPTY & LOADING */
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:52px 24px;text-align:center;gap:10px}
+.empty-icon{font-size:2.8rem}
+.empty-title{font-family:'Outfit',sans-serif;font-weight:800;font-size:.96rem;color:var(--t1)}
+.empty-sub{font-size:.8rem;color:var(--t2);line-height:1.65}
+.loading{display:flex;align-items:center;justify-content:center;padding:40px;gap:10px;color:var(--t2);font-size:.82rem}
+.spinner{width:18px;height:18px;flex-shrink:0;border:2px solid var(--bord2);border-top-color:var(--blue);border-radius:50%;animation:spin .65s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* TOAST */
+.toast{position:fixed;bottom:calc(var(--nav) + 10px);left:50%;transform:translateX(-50%) translateY(10px);background:rgba(15,30,50,.95);color:var(--t1);padding:10px 20px;border-radius:99px;font-size:.79rem;font-weight:600;opacity:0;transition:all .22s var(--ease);z-index:9000;white-space:nowrap;pointer-events:none;max-width:90vw;backdrop-filter:blur(10px);border:1px solid var(--bord2);box-shadow:0 4px 20px rgba(0,0,0,.4)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* RESPONSIVE */
+@media(min-width:640px){
+  .stats-row{grid-template-columns:repeat(4,1fr)}
+  .content{padding:20px 20px calc(var(--nav) + 20px)}
+}
+@media(min-width:900px){
+  body{display:grid;grid-template-columns:220px 1fr;min-height:100vh}
+  .topbar{grid-column:1/-1}
+  .bottom-nav{position:fixed;top:var(--hdr);bottom:0;left:0;right:auto;width:220px;height:auto;flex-direction:column;border-top:none;border-right:1px solid var(--bord);padding-bottom:0;padding-top:10px;align-items:stretch;justify-content:flex-start;overflow-y:auto}
+  .nav-btn{flex-direction:row;justify-content:flex-start;padding:13px 18px;gap:12px;border-radius:0}
+  .nav-btn span{font-size:.82rem;text-transform:none;letter-spacing:0}
+  .nav-btn.active{background:var(--gold-l)}
+  #app.show{grid-column:2}
+  .content{max-width:100%;padding:20px 24px 24px}
+}
+</style>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div id="splash">
+  <div class="spl-grid"></div>
+  <div class="spl-halo spl-halo-1"></div>
+  <div class="spl-halo spl-halo-2"></div>
+  <div class="spl-center">
+    <div class="spl-icon">
+      <svg width="42" height="42" viewBox="0 0 24 24" fill="none">
+        <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="rgba(96,165,250,0.12)"/>
+        <path d="M22 2L11 13" stroke="#93c5fd" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="spl-pre">Espace</div>
+    <div class="spl-title">Sino<span>Market</span> BF</div>
+    <div class="spl-sub">✈️ Portail Partenaire</div>
+    <div class="spl-bar-wrap"><div class="spl-bar" id="splBar"></div></div>
+    <div class="spl-by">Propulsé par <span>Lewis Corp Tech</span></div>
+  </div>
+</div>
+
+<!-- AUTH -->
+<div id="authScreen">
+  <div class="auth-wrap">
+    <div class="auth-brand">
+      <div class="auth-brand-pre">Bienvenue sur</div>
+      <div class="auth-brand-name">Sino<span>Market BF</span></div>
+      <div class="auth-brand-badge">✈️ Portail Partenaire</div>
+    </div>
+    <div class="auth-card">
+      <div class="auth-tabs">
+        <button class="auth-tab active" onclick="switchAuthTab('login')">Connexion</button>
+        <button class="auth-tab" onclick="switchAuthTab('register')">Inscription</button>
+      </div>
+
+      <!-- LOGIN -->
+      <div class="auth-form active" id="loginForm">
+        <div class="inp-group">
+          <label class="inp-label">Email</label>
+          <input class="inp" type="email" id="loginEmail" placeholder="votre@email.com">
+        </div>
+        <div class="inp-group">
+          <label class="inp-label">Mot de passe</label>
+          <input class="inp" type="password" id="loginPwd" placeholder="••••••••">
+        </div>
+        <button class="btn-auth" id="loginBtn" onclick="doLogin()">🔐 Se connecter</button>
+        <div class="auth-msg" id="loginMsg"></div>
+      </div>
+
+      <!-- REGISTER -->
+      <div class="auth-form" id="registerForm">
+        <div class="steps-bar" id="stepsBar">
+          <div class="step-dot-wrap">
+            <div class="step-dot active" id="sdot1">1</div>
+            <div class="step-lbl active" id="slbl1">Identité</div>
+          </div>
+          <div class="step-line" id="sline1"></div>
+          <div class="step-dot-wrap">
+            <div class="step-dot" id="sdot2">2</div>
+            <div class="step-lbl" id="slbl2">Documents</div>
+          </div>
+          <div class="step-line" id="sline2"></div>
+          <div class="step-dot-wrap">
+            <div class="step-dot" id="sdot3">3</div>
+            <div class="step-lbl" id="slbl3">Adresse</div>
+          </div>
+        </div>
+
+        <!-- ÉTAPE 1 -->
+        <div id="regStep1">
+          <div class="inp-row">
+            <div class="inp-group">
+              <label class="inp-label">Prénom</label>
+              <input class="inp" type="text" id="rPrenom" placeholder="Jean">
+            </div>
+            <div class="inp-group">
+              <label class="inp-label">Nom</label>
+              <input class="inp" type="text" id="rNom" placeholder="Traoré">
+            </div>
+          </div>
+          <div class="inp-group">
+            <label class="inp-label">Téléphone / WhatsApp</label>
+            <input class="inp" type="tel" id="rTel" placeholder="+226 XX XX XX XX">
+          </div>
+          <div class="inp-group">
+            <label class="inp-label">Email</label>
+            <input class="inp" type="email" id="rEmail" placeholder="votre@email.com">
+          </div>
+          <div class="inp-group">
+            <label class="inp-label">Mot de passe</label>
+            <input class="inp" type="password" id="rPwd" placeholder="8 caractères minimum">
+          </div>
+          <div class="inp-group">
+            <label class="inp-label">Confirmer le mot de passe</label>
+            <input class="inp" type="password" id="rPwd2" placeholder="Répéter le mot de passe">
+          </div>
+          <button class="btn-auth" onclick="regNext(1)">Continuer →</button>
+        </div>
+
+        <!-- ÉTAPE 2 -->
+        <div id="regStep2" style="display:none;">
+          <div style="background:var(--blue-l);border:1px solid rgba(59,130,246,.2);border-radius:10px;padding:12px;margin-bottom:14px;font-size:.76rem;color:#93c5fd;line-height:1.6;">
+            📋 Uploadez votre <strong>pièce d'identité</strong> (CNI, passeport ou permis) — recto et verso.
+          </div>
+          <div class="inp-group">
+            <label class="inp-label">📸 Recto (face)</label>
+            <div class="upload-zone" id="zoneRecto" onclick="document.getElementById('fileRecto').click()">
+              <div class="upload-zone-icon">🪪</div>
+              <div class="upload-zone-text">Cliquez pour ajouter la photo recto</div>
+              <div class="upload-zone-sub">JPG, PNG — max 5Mo</div>
+              <div class="upload-preview" id="prevRecto"></div>
+            </div>
+            <input type="file" id="fileRecto" accept="image/*" style="display:none" onchange="previewUpload('fileRecto','prevRecto','zoneRecto')">
+          </div>
+          <div class="inp-group">
+            <label class="inp-label">📸 Verso (dos)</label>
+            <div class="upload-zone" id="zoneVerso" onclick="document.getElementById('fileVerso').click()">
+              <div class="upload-zone-icon">🪪</div>
+              <div class="upload-zone-text">Cliquez pour ajouter la photo verso</div>
+              <div class="upload-zone-sub">JPG, PNG — max 5Mo</div>
+              <div class="upload-preview" id="prevVerso"></div>
+            </div>
+            <input type="file" id="fileVerso" accept="image/*" style="display:none" onchange="previewUpload('fileVerso','prevVerso','zoneVerso')">
+          </div>
+          <div style="display:flex;gap:10px;">
+            <button class="btn-back" onclick="regBack(2)">← Retour</button>
+            <button class="btn-auth" style="flex:1;" onclick="regNext(2)">Continuer →</button>
+          </div>
+        </div>
+
+        <!-- ÉTAPE 3 -->
+        <div id="regStep3" style="display:none;">
+          <div class="inp-group">
+            <label class="inp-label">Pays</label>
+            <select class="inp" id="rPays">
+              <option value="Burkina Faso" selected>🇧🇫 Burkina Faso</option>
+              <option value="Côte d'Ivoire">🇨🇮 Côte d'Ivoire</option>
+              <option value="Mali">🇲🇱 Mali</option>
+              <option value="Sénégal">🇸🇳 Sénégal</option>
+              <option value="Niger">🇳🇪 Niger</option>
+              <option value="Togo">🇹🇬 Togo</option>
+              <option value="Bénin">🇧🇯 Bénin</option>
+              <option value="Autre">Autre</option>
+            </select>
+          </div>
+          <div class="inp-row">
+            <div class="inp-group">
+              <label class="inp-label">Ville</label>
+              <input class="inp" type="text" id="rVille" placeholder="Ouagadougou">
+            </div>
+            <div class="inp-group">
+              <label class="inp-label">Quartier</label>
+              <input class="inp" type="text" id="rQuartier" placeholder="Gounghin">
+            </div>
+          </div>
+          <div class="inp-group">
+            <label class="inp-label">Rue / Secteur (optionnel)</label>
+            <input class="inp" type="text" id="rRue" placeholder="Rue 12.45, Secteur 3...">
+          </div>
+          <div style="background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.18);border-radius:10px;padding:12px;margin-bottom:14px;">
+            <div style="font-size:.69rem;font-weight:700;color:#f87171;text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px;">⚠️ Clause de responsabilité</div>
+            <div style="font-size:.74rem;color:rgba(255,255,255,.45);line-height:1.6;">En tant que partenaire, vous êtes responsable des commandes de votre équipe. <strong style="color:rgba(255,255,255,.65);">SinoMarket BF</strong> n'est pas responsable des dommages.</div>
+            <label style="display:flex;align-items:flex-start;gap:10px;margin-top:11px;cursor:pointer;">
+              <input type="checkbox" id="rClause" style="margin-top:2px;accent-color:var(--gold);width:16px;height:16px;flex-shrink:0;">
+              <span style="font-size:.74rem;color:rgba(255,255,255,.45);">J'ai lu et j'accepte la clause de responsabilité</span>
+            </label>
+          </div>
+          <div style="display:flex;gap:10px;">
+            <button class="btn-back" onclick="regBack(3)">← Retour</button>
+            <button class="btn-auth" style="flex:1;" id="regSubmitBtn" onclick="doRegister()">🚀 Soumettre</button>
+          </div>
+        </div>
+
+        <!-- SUCCÈS INSCRIPTION -->
+        <div id="regSuccess" style="display:none;">
+          <div class="reg-success">
+            <div class="reg-success-icon">✈️</div>
+            <div class="reg-success-title">Dossier soumis !</div>
+            <div class="reg-success-text">Votre candidature est en cours d'examen.<br>Vous serez notifié par <strong>WhatsApp</strong> sous <strong style="color:var(--gold);">24 heures</strong>.</div>
+            <div class="reg-success-note">📧 Un email de confirmation vous a été envoyé. Vérifiez vos spams si vous ne le recevez pas.</div>
+          </div>
+        </div>
+        <div class="auth-msg" id="registerMsg"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <header class="topbar">
+    <div class="topbar-logo">
+      <div class="topbar-logo-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="rgba(96,165,250,0.12)"/>
+        </svg>
+      </div>
+      Sino<span>Market BF</span>
+    </div>
+    <div class="topbar-badge">Partenaire</div>
+    <div class="topbar-right">
+      <button class="btn-logout" onclick="doLogout()">Déconnexion</button>
+    </div>
+  </header>
+
+  <nav class="bottom-nav">
+    <button class="nav-btn active" id="navDashboard" onclick="showPage('Dashboard')">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      <span>Dashboard</span>
+    </button>
+    <button class="nav-btn" id="navCommandes" onclick="showPage('Commandes')">
+      <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke-linecap="round"/></svg>
+      <span>Commandes</span>
+    </button>
+    <button class="nav-btn" id="navEquipe" onclick="showPage('Equipe')">
+      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke-linecap="round"/></svg>
+      <span>Équipe</span>
+    </button>
+    <button class="nav-btn" id="navProfil" onclick="showPage('Profil')">
+      <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span>Profil</span>
+    </button>
+  </nav>
+
+  <!-- DASHBOARD -->
+  <div class="page active" id="pageDashboard">
+    <div class="content">
+      <div class="sec-head">
+        <div class="sec-title" id="dashGreeting">Bonjour 👋</div>
+        <div class="sec-sub" id="dashDate"></div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-card"><div class="stat-card-icon">📦</div><span class="stat-card-val" id="statTotal">—</span><div class="stat-card-lbl">Commandes total</div></div>
+        <div class="stat-card"><div class="stat-card-icon">⏳</div><span class="stat-card-val" id="statAttente">—</span><div class="stat-card-lbl">En attente</div></div>
+        <div class="stat-card"><div class="stat-card-icon">👥</div><span class="stat-card-val" id="statEquipe">—</span><div class="stat-card-lbl">Membres équipe</div></div>
+        <div class="stat-card"><div class="stat-card-icon">✅</div><span class="stat-card-val" id="statLivrees">—</span><div class="stat-card-lbl">Livrées</div></div>
+      </div>
+      <div class="sec-head"><div class="sec-title">Commandes récentes</div></div>
+      <div id="dashRecent"><div class="loading"><div class="spinner"></div> Chargement...</div></div>
+    </div>
+  </div>
+
+  <!-- COMMANDES -->
+  <div class="page" id="pageCommandes">
+    <div class="content">
+      <div class="sec-head"><div class="sec-title">📦 Mes commandes</div><div class="sec-sub">Commandes de votre équipe</div></div>
+      <div style="display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;margin-bottom:14px;padding-bottom:2px;">
+        <button class="filter-btn active" onclick="filterCmds('all',this)">Toutes</button>
+        <button class="filter-btn" onclick="filterCmds('en_attente',this)">En attente</button>
+        <button class="filter-btn" onclick="filterCmds('confirme',this)">Confirmées</button>
+        <button class="filter-btn" onclick="filterCmds('expedie',this)">Expédiées</button>
+        <button class="filter-btn" onclick="filterCmds('livre',this)">Livrées</button>
+      </div>
+      <div id="cmdsList"><div class="loading"><div class="spinner"></div> Chargement...</div></div>
+    </div>
+  </div>
+
+  <!-- EQUIPE -->
+  <div class="page" id="pageEquipe">
+    <div class="content">
+      <div class="sec-head"><div class="sec-title">👥 Mon équipe</div><div class="sec-sub" id="equipeCount">— membres</div></div>
+      <div class="referral-box">
+        <div class="referral-box-title">🔗 Mon lien d'invitation</div>
+        <div class="referral-box-sub">Partagez ce lien. Vos invités et leurs commandes vous seront automatiquement attribués.</div>
+        <div class="referral-link-wrap">
+          <div class="referral-link" id="refLinkDisplay">—</div>
+          <button class="btn-copy" onclick="copyRefLink()">📋 Copier</button>
+        </div>
+        <button class="btn-share-wa" onclick="shareRefWhatsApp()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.528 5.85L.057 23.18a.75.75 0 0 0 .916.932l5.453-1.43A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.693 9.693 0 0 1-4.953-1.359l-.355-.211-3.676.964.981-3.584-.232-.369A9.694 9.694 0 0 1 2.25 12C2.25 6.615 6.615 2.25 12 2.25S21.75 6.615 21.75 12 17.385 21.75 12 21.75z"/></svg>
+          Partager sur WhatsApp
+        </button>
+      </div>
+      <div class="sec-head" style="margin-top:6px;"><div class="sec-title">Membres invités</div></div>
+      <div id="membresList"><div class="loading"><div class="spinner"></div> Chargement...</div></div>
+    </div>
+  </div>
+
+  <!-- PROFIL -->
+  <div class="page" id="pageProfil">
+    <div class="profil-header">
+      <div class="profil-av-wrap">
+        <div class="profil-av" id="profilAv">—</div>
+        <div><div class="profil-name" id="profilName">—</div><div class="profil-email" id="profilEmail">—</div></div>
+      </div>
+      <div class="profil-stats">
+        <div class="profil-stat"><span class="profil-stat-val" id="pStatCmds">—</span><div class="profil-stat-lbl">Commandes</div></div>
+        <div class="profil-stat"><span class="profil-stat-val" id="pStatEquipe">—</span><div class="profil-stat-lbl">Équipe</div></div>
+        <div class="profil-stat"><span class="profil-stat-val" id="pStatLivrees">—</span><div class="profil-stat-lbl">Livrées</div></div>
+      </div>
+    </div>
+    <div class="profil-section">
+      <div class="profil-card">
+        <div class="profil-card-title">📱 Contact & Support</div>
+        <div class="profil-card-sub">Contactez l'équipe SinoMarket BF</div>
+        <div class="profil-menu-item" onclick="window.open('https://wa.me/22644737790','_blank')">
+          <div class="profil-menu-icon" style="background:rgba(37,211,102,.12);">💬</div>
+          <div><div class="profil-menu-title">Support WhatsApp</div><div class="profil-menu-sub">Disponible 7j/7</div></div>
+          <div class="profil-menu-arrow">›</div>
+        </div>
+        <div class="profil-menu-item" onclick="window.open('mailto:sinomarket2@gmail.com','_blank')">
+          <div class="profil-menu-icon" style="background:rgba(59,130,246,.12);">✉️</div>
+          <div><div class="profil-menu-title">Email</div><div class="profil-menu-sub">sinomarket2@gmail.com</div></div>
+          <div class="profil-menu-arrow">›</div>
+        </div>
+      </div>
+      <div class="profil-card" style="border-color:rgba(239,68,68,.2);">
+        <div style="font-size:.69rem;font-weight:700;color:#f87171;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">⚠️ Clause de responsabilité</div>
+        <div style="font-size:.76rem;color:var(--t2);line-height:1.65;">En tant que partenaire, vous êtes responsable des commandes de votre équipe. Tout problème de livraison ou de paiement vous incombe directement. <strong style="color:var(--t1);">SinoMarket BF</strong> n'est pas responsable des dommages causés.</div>
+      </div>
+    </div>
+    <button class="btn-logout-full" onclick="doLogout()">↪ Se déconnecter</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ══ CONFIG ══════════════════════════════════
+var SUPABASE_URL = 'https://bcgbxopmsnyljstglyuz.supabase.co';
+var SUPABASE_KEY = 'sb_publishable_kZY3bC5t9dJreli4-FP1Kg_FsdoFw0E';
+var WA_NUMBER    = '22644737790';
+var BASE_URL     = 'https://sinomarketbf.com';
+var ADMIN_EMAIL  = 'sinomarket2@gmail.com'; // Email admin — auto-approuvé
+
+var _sb          = null;
+var _user        = null;
+var _partenaire  = null;
+var _allCmds     = [];
+var _filter      = 'all';
+
+// ══ UTILS ═══════════════════════════════════
+function escHtml(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  if (!t) return;
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 3000);
+}
+
+// ══ SPLASH ══════════════════════════════════
+function initSplash() {
+  requestAnimationFrame(function(){
+    requestAnimationFrame(function(){
+      var b = document.getElementById('splBar');
+      if (b) b.style.width = '100%';
+    });
+  });
+  setTimeout(function(){
+    var sp = document.getElementById('splash');
+    if (sp) sp.classList.add('hide');
+  }, 3200);
+}
+
+// ══ AUTH UI ═════════════════════════════════
+function showAuth() {
+  document.getElementById('authScreen').classList.add('show');
+  document.getElementById('app').classList.remove('show');
+}
+function hideAuth() {
+  document.getElementById('authScreen').classList.remove('show');
+  document.getElementById('app').classList.add('show');
+}
+function switchAuthTab(tab) {
+  var tabs = document.querySelectorAll('.auth-tab');
+  tabs[0].classList.toggle('active', tab === 'login');
+  tabs[1].classList.toggle('active', tab === 'register');
+  document.getElementById('loginForm').classList.toggle('active', tab === 'login');
+  document.getElementById('registerForm').classList.toggle('active', tab === 'register');
+}
+
+// ══ LOGIN ════════════════════════════════════
+async function doLogin() {
+  var email = document.getElementById('loginEmail').value.trim();
+  var pwd   = document.getElementById('loginPwd').value;
+  var msg   = document.getElementById('loginMsg');
+  var btn   = document.getElementById('loginBtn');
+  if (!email || !pwd) { msg.className='auth-msg err'; msg.textContent='Email et mot de passe requis'; return; }
+  btn.disabled = true; btn.textContent = '⏳ Connexion...'; msg.textContent = '';
+  var { data, error } = await _sb.auth.signInWithPassword({ email, password: pwd });
+  btn.disabled = false; btn.textContent = '🔐 Se connecter';
+  if (error) { msg.className='auth-msg err'; msg.textContent='❌ Email ou mot de passe incorrect'; return; }
+  _user = data.user;
+  await onLogin();
+}
+
+// ══ REGISTER ════════════════════════════════
+function updateSteps(step) {
+  for (var i = 1; i <= 3; i++) {
+    var dot = document.getElementById('sdot'+i);
+    var lbl = document.getElementById('slbl'+i);
+    if (!dot) continue;
+    dot.className = 'step-dot' + (i < step ? ' done' : i === step ? ' active' : '');
+    lbl.className = 'step-lbl' + (i < step ? ' done' : i === step ? ' active' : '');
+  }
+  for (var j = 1; j <= 2; j++) {
+    var line = document.getElementById('sline'+j);
+    if (line) line.className = 'step-line' + (j < step ? ' done' : '');
+  }
+}
+function showRegStep(step) {
+  for (var i = 1; i <= 3; i++) {
+    var el = document.getElementById('regStep'+i);
+    if (el) el.style.display = i === step ? 'block' : 'none';
+  }
+  document.getElementById('registerMsg').textContent = '';
+  updateSteps(step);
+}
+function regNext(from) {
+  var msg = document.getElementById('registerMsg');
+  if (from === 1) {
+    var ok = document.getElementById('rPrenom').value.trim() &&
+             document.getElementById('rNom').value.trim() &&
+             document.getElementById('rTel').value.trim() &&
+             document.getElementById('rEmail').value.trim() &&
+             document.getElementById('rPwd').value;
+    if (!ok) { msg.className='auth-msg err'; msg.textContent='Tous les champs sont obligatoires'; return; }
+    if (document.getElementById('rPwd').value.length < 8) { msg.className='auth-msg err'; msg.textContent='Mot de passe : 8 caractères minimum'; return; }
+    if (document.getElementById('rPwd').value !== document.getElementById('rPwd2').value) { msg.className='auth-msg err'; msg.textContent='Les mots de passe ne correspondent pas'; return; }
+    showRegStep(2);
+  } else if (from === 2) {
+    if (!document.getElementById('fileRecto').files[0] || !document.getElementById('fileVerso').files[0]) {
+      msg.className='auth-msg err'; msg.textContent='Veuillez uploader recto et verso de votre pièce d\'identité'; return;
+    }
+    showRegStep(3);
+  }
+}
+function regBack(from) { showRegStep(from - 1); }
+function previewUpload(inputId, prevId, zoneId) {
+  var file = document.getElementById(inputId).files[0];
+  if (!file) return;
+  document.getElementById(zoneId).classList.add('filled');
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    document.getElementById(prevId).innerHTML = '<img src="' + e.target.result + '" alt="preview">';
+  };
+  reader.readAsDataURL(file);
+}
+async function doRegister() {
+  var prenom   = document.getElementById('rPrenom').value.trim();
+  var nom      = document.getElementById('rNom').value.trim();
+  var tel      = document.getElementById('rTel').value.trim();
+  var email    = document.getElementById('rEmail').value.trim();
+  var pwd      = document.getElementById('rPwd').value;
+  var pays     = document.getElementById('rPays').value;
+  var ville    = document.getElementById('rVille').value.trim();
+  var quartier = document.getElementById('rQuartier').value.trim();
+  var rue      = document.getElementById('rRue').value.trim();
+  var msg      = document.getElementById('registerMsg');
+  var btn      = document.getElementById('regSubmitBtn');
+  if (!ville) { msg.className='auth-msg err'; msg.textContent='Veuillez indiquer votre ville'; return; }
+  if (!document.getElementById('rClause').checked) { msg.className='auth-msg err'; msg.textContent='⚠️ Acceptez la clause de responsabilité'; return; }
+  btn.disabled = true; btn.textContent = '⏳ Envoi...'; msg.textContent = '';
+  try {
+    var { data: authData, error: authErr } = await _sb.auth.signUp({ email, password: pwd, options: { emailRedirectTo: window.location.origin } });
+    if (authErr) {
+      var errMsg = authErr.message;
+      if (errMsg.includes('already registered') || errMsg.includes('already been registered')) {
+        errMsg = 'Cet email est déjà utilisé. Connectez-vous via l\'onglet Connexion.';
+      }
+      throw new Error(errMsg);
+    }
+    var userId = authData.user.id;
+    var refCode = 'P-' + userId.substring(0, 8).toUpperCase();
+    var urlRecto = '', urlVerso = '';
+    var recto = document.getElementById('fileRecto').files[0];
+    var verso = document.getElementById('fileVerso').files[0];
+    if (recto) {
+      var pathR = userId + '/id_recto_' + Date.now() + '.' + recto.name.split('.').pop();
+      var { error: errR } = await _sb.storage.from('partenaires_docs').upload(pathR, recto, { upsert: true });
+      if (!errR) urlRecto = _sb.storage.from('partenaires_docs').getPublicUrl(pathR).data.publicUrl;
+    }
+    if (verso) {
+      var pathV = userId + '/id_verso_' + Date.now() + '.' + verso.name.split('.').pop();
+      var { error: errV } = await _sb.storage.from('partenaires_docs').upload(pathV, verso, { upsert: true });
+      if (!errV) urlVerso = _sb.storage.from('partenaires_docs').getPublicUrl(pathV).data.publicUrl;
+    }
+    // Admin → statut 'valide' directement, pas besoin de validation
+    var isAdmin = email.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+    var statut  = isAdmin ? 'valide' : 'en_attente';
+
+    var { error: pErr } = await _sb.from('partenaires').insert({
+      user_id: userId, nom_complet: prenom + ' ' + nom, prenom, nom_famille: nom,
+      email, whatsapp: tel, pays, ville, quartier, rue,
+      id_recto_url: urlRecto, id_verso_url: urlVerso,
+      referral_code: refCode, statut: statut,
+      created_at: new Date().toISOString()
+    });
+    if (pErr) throw new Error(pErr.message);
+
+    if (isAdmin) {
+      // Admin → connexion directe sans attendre la validation
+      document.getElementById('regStep3').style.display = 'none';
+      document.getElementById('stepsBar').style.display = 'none';
+      document.getElementById('regSuccess').innerHTML =
+        '<div class="reg-success">' +
+          '<div class="reg-success-icon">🔓</div>' +
+          '<div class="reg-success-title">Compte admin créé !</div>' +
+          '<div class="reg-success-text">Votre compte administrateur est <strong style="color:var(--green);">immédiatement actif</strong>.<br>Connectez-vous maintenant.</div>' +
+        '</div>';
+      document.getElementById('regSuccess').style.display = 'block';
+    } else {
+      document.getElementById('regStep3').style.display = 'none';
+      document.getElementById('stepsBar').style.display = 'none';
+      document.getElementById('regSuccess').style.display = 'block';
+    }
+  } catch(e) {
+    msg.className = 'auth-msg err';
+    msg.textContent = '❌ ' + (e.message || 'Erreur lors de la soumission');
+    btn.disabled = false; btn.textContent = '🚀 Soumettre';
+  }
+}
+
+// ══ LOGOUT ══════════════════════════════════
+async function doLogout() {
+  await _sb.auth.signOut();
+  _user = null; _partenaire = null; _allCmds = [];
+  showAuth();
+}
+
+// ══ ON LOGIN ════════════════════════════════
+async function onLogin() {
+  if (!_user) return;
+  var { data: part, error } = await _sb.from('partenaires').select('*').eq('user_id', _user.id).single();
+  if (error || !part) {
+    showAuth();
+    var m = document.getElementById('loginMsg');
+    m.className = 'auth-msg err'; m.textContent = '❌ Aucun compte partenaire trouvé.';
+    return;
+  }
+  if (part.statut === 'en_attente') {
+    await _sb.auth.signOut(); showAuth();
+    var m = document.getElementById('loginMsg');
+    m.className = 'auth-msg err';
+    m.textContent = '⏳ Votre dossier est en cours d\'examen par l\'admin. Vous serez notifié sous 24h par WhatsApp.';
+    return;
+  }
+  if (part.statut === 'refuse') {
+    await _sb.auth.signOut(); showAuth();
+    var m = document.getElementById('loginMsg');
+    m.className = 'auth-msg err'; m.textContent = '❌ Candidature refusée. Contactez le support.';
+    return;
+  }
+  _partenaire = part;
+  hideAuth();
+  initApp();
+}
+
+// ══ INIT APP ════════════════════════════════
+function initApp() {
+  var d = new Date();
+  document.getElementById('dashDate').textContent = d.toLocaleDateString('fr-FR', { weekday:'long', day:'numeric', month:'long' });
+  var name = _partenaire.prenom || (_partenaire.nom_complet || '').split(' ')[0] || 'Partenaire';
+  document.getElementById('dashGreeting').textContent = 'Bonjour, ' + name + ' 👋';
+  var initials = (_partenaire.nom_complet || 'P').split(' ').map(function(w){ return w[0]; }).slice(0,2).join('').toUpperCase();
+  document.getElementById('profilAv').textContent = initials;
+  document.getElementById('profilName').textContent = _partenaire.nom_complet || '—';
+  document.getElementById('profilEmail').textContent = _user.email || '—';
+  var refLink = BASE_URL + '/?ref=' + (_partenaire.referral_code || '');
+  document.getElementById('refLinkDisplay').textContent = refLink;
+  loadDashboard();
+}
+
+// ══ NAVIGATION ══════════════════════════════
+function showPage(name) {
+  var pages = ['Dashboard','Commandes','Equipe','Profil'];
+  pages.forEach(function(p){
+    var pg = document.getElementById('page'+p);
+    var nb = document.getElementById('nav'+p);
+    if (pg) pg.classList.toggle('active', p === name);
+    if (nb) nb.classList.toggle('active', p === name);
+  });
+  if (name === 'Dashboard') loadDashboard();
+  else if (name === 'Commandes') loadCommandes();
+  else if (name === 'Equipe') loadEquipe();
+  else if (name === 'Profil') loadProfilStats();
+}
+
+// ══ DASHBOARD ════════════════════════════════
+async function loadDashboard() {
+  if (!_partenaire) return;
+  var { data: cmds } = await _sb.from('commandes').select('*').eq('partenaire_id', _partenaire.id).order('created_at', { ascending: false });
+  _allCmds = cmds || [];
+  document.getElementById('statTotal').textContent   = _allCmds.length;
+  document.getElementById('statAttente').textContent  = _allCmds.filter(function(c){ return c.statut === 'en_attente'; }).length;
+  document.getElementById('statLivrees').textContent  = _allCmds.filter(function(c){ return c.statut === 'livre'; }).length;
+  var { count } = await _sb.from('profils').select('id', { count:'exact', head:true }).eq('partenaire_id', _partenaire.id);
+  document.getElementById('statEquipe').textContent = count || 0;
+  var recent = _allCmds.slice(0, 3);
+  var el = document.getElementById('dashRecent');
+  el.innerHTML = recent.length === 0
+    ? '<div class="empty"><div class="empty-icon">📭</div><div class="empty-title">Aucune commande</div><div class="empty-sub">Les commandes de votre équipe apparaîtront ici</div></div>'
+    : recent.map(renderCmdCard).join('');
+}
+
+// ══ COMMANDES ════════════════════════════════
+async function loadCommandes() {
+  if (!_partenaire) return;
+  var el = document.getElementById('cmdsList');
+  el.innerHTML = '<div class="loading"><div class="spinner"></div> Chargement...</div>';
+  var { data: cmds } = await _sb.from('commandes').select('*').eq('partenaire_id', _partenaire.id).order('created_at', { ascending: false });
+  _allCmds = cmds || [];
+  renderFiltered();
+}
+function filterCmds(f, btn) {
+  _filter = f;
+  document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+  renderFiltered();
+}
+function renderFiltered() {
+  var list = _filter === 'all' ? _allCmds : _allCmds.filter(function(c){ return c.statut === _filter; });
+  var el = document.getElementById('cmdsList');
+  if (!el) return;
+  el.innerHTML = list.length === 0
+    ? '<div class="empty"><div class="empty-icon">📭</div><div class="empty-title">Aucune commande</div><div class="empty-sub">Aucune commande dans cette catégorie</div></div>'
+    : list.map(renderCmdCard).join('');
+}
+function renderCmdCard(cmd) {
+  var sClass = {en_attente:'s-attente',confirme:'s-confirme',en_preparation:'s-preparation',expedie:'s-expedie',livre:'s-livre',annule:'s-annule'}[cmd.statut] || 's-attente';
+  var sLabel = {en_attente:'⏳ En attente',confirme:'✅ Confirmée',en_preparation:'🔧 Préparation',expedie:'✈️ Expédiée',livre:'📦 Livrée',annule:'❌ Annulée'}[cmd.statut] || cmd.statut;
+  var pName  = {wave:'Wave',orange:'Orange Money',moov:'Moov Money'}[cmd.paiement_methode] || (cmd.paiement_methode || '—');
+  var date   = new Date(cmd.created_at).toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'});
+  var items  = [];
+  try { items = JSON.parse(cmd.produits || '[]'); } catch(e){}
+  var itemsStr = items.slice(0,2).map(function(p){ return p.nom + ' x' + p.qty; }).join(', ');
+  if (items.length > 2) itemsStr += ' +' + (items.length-2) + ' autres';
+  var isPending = cmd.paiement_statut === 'en_attente_confirmation' || cmd.paiement_statut === 'non_paye';
+  return '<div class="cmd-card">' +
+    '<div class="cmd-top"><div><div class="cmd-ref">' + escHtml(cmd.numero||'—') + '</div><div class="cmd-date">' + date + '</div></div>' +
+    '<span class="statut-pill ' + sClass + '">' + sLabel + '</span></div>' +
+    '<div class="cmd-client">👤 ' + escHtml(cmd.nom_client||'—') + '</div>' +
+    (itemsStr ? '<div class="cmd-items">🛍️ ' + escHtml(itemsStr) + '</div>' : '') +
+    '<div class="cmd-meta"><span class="cmd-tag">📱 ' + pName + '</span><span class="cmd-tag">📍 ' + escHtml(cmd.ville||'—') + '</span></div>' +
+    '<div class="cmd-total">' + (cmd.total||0).toLocaleString() + ' CFA <span>(estimatif)</span></div>' +
+    (isPending ? '<div class="paiement-box"><span class="paiement-box-label">💳 Envoyer demande de paiement — ' + pName + '</span><div class="prix-row"><input class="prix-inp" type="number" id="prix_'+cmd.id+'" placeholder="Montant réel en CFA"><button class="btn-send-wa" onclick="sendWA(\''+cmd.id+'\',\''+escHtml(cmd.nom_client||'')+'\',\''+(cmd.telephone||'')+'\',\''+(cmd.paiement_methode||'')+'\',\''+(cmd.numero||'')+'\')">📲 Envoyer</button></div></div>' : '') +
+    '<div class="paiement-box" style="margin-top:8px;"><span class="paiement-box-label">Mettre à jour le statut</span>' +
+    '<select class="statut-select" id="sel_'+cmd.id+'">' +
+    ['en_attente','confirme','en_preparation','expedie','livre','annule'].map(function(s){
+      var l = {en_attente:'⏳ En attente',confirme:'✅ Confirmée',en_preparation:'🔧 Préparation',expedie:'✈️ Expédiée',livre:'📦 Livrée',annule:'❌ Annulée'}[s];
+      return '<option value="'+s+'"'+(cmd.statut===s?' selected':'')+'>'+l+'</option>';
+    }).join('') +
+    '</select><button class="btn-update-statut" id="btn_'+cmd.id+'" onclick="updateStatut(\''+cmd.id+'\')">✅ Mettre à jour</button></div>' +
+  '</div>';
+}
+async function sendWA(cmdId, nom, tel, methode, numero) {
+  var inp = document.getElementById('prix_' + cmdId);
+  var prix = parseInt(inp ? inp.value : 0);
+  if (!prix || prix < 1) { showToast('⚠️ Entrez le montant réel'); return; }
+  var payNums = { wave:'', orange:'', moov:'' };
+  var { data: cfg } = await _sb.from('config').select('wave_number,orange_number,moov_number').limit(1).single();
+  if (cfg) { payNums.wave = cfg.wave_number||''; payNums.orange = cfg.orange_number||''; payNums.moov = cfg.moov_number||''; }
+  var pName = {wave:'Wave',orange:'Orange Money',moov:'Moov Money'}[methode] || methode;
+  var pNum  = payNums[methode] || WA_NUMBER;
+  var t = (tel||'').replace(/\D/g,'');
+  if (!t) { showToast('⚠️ Numéro client introuvable'); return; }
+  var msg = '🛍️ *SinoMarket BF* — Commande *'+numero+'*\n\nBonjour *'+nom+'* ! 👋\n\nVotre commande est prête.\n\n💰 *Montant :* '+prix.toLocaleString()+' CFA\n📱 *Mode :* '+pName+'\n📞 *Numéro :* '+pNum+'\n\nEnvoyez la capture de paiement sur WhatsApp.\n\nMerci 🙏';
+  window.open('https://wa.me/'+t+'?text='+encodeURIComponent(msg),'_blank');
+  await _sb.from('commandes').update({ paiement_statut:'verification', prix_reel: prix }).eq('id', cmdId);
+  showToast('✅ Message envoyé au client');
+}
+async function updateStatut(cmdId) {
+  var sel = document.getElementById('sel_'+cmdId);
+  var btn = document.getElementById('btn_'+cmdId);
+  if (!sel) return;
+  btn.disabled = true; btn.textContent = '⏳...';
+  var { error } = await _sb.from('commandes').update({ statut: sel.value, statut_updated_at: new Date().toISOString() }).eq('id', cmdId);
+  if (!error) {
+    showToast('✅ Statut mis à jour');
+    var c = _allCmds.find(function(x){ return x.id === cmdId; });
+    if (c) c.statut = sel.value;
+  } else {
+    showToast('❌ Erreur : ' + error.message);
+  }
+  btn.disabled = false; btn.textContent = '✅ Mettre à jour';
+}
+
+// ══ EQUIPE ═══════════════════════════════════
+async function loadEquipe() {
+  if (!_partenaire) return;
+  var el = document.getElementById('membresList');
+  el.innerHTML = '<div class="loading"><div class="spinner"></div> Chargement...</div>';
+  var { data: membres } = await _sb.from('profils').select('id,nom,email,created_at').eq('partenaire_id', _partenaire.id).order('created_at', { ascending: false });
+  membres = membres || [];
+  document.getElementById('equipeCount').textContent = membres.length + ' membre' + (membres.length > 1 ? 's' : '');
+  if (membres.length === 0) {
+    el.innerHTML = '<div class="empty"><div class="empty-icon">👥</div><div class="empty-title">Aucun membre</div><div class="empty-sub">Partagez votre lien pour constituer votre équipe</div></div>';
+    return;
+  }
+  var html = '';
+  for (var i = 0; i < membres.length; i++) {
+    var m = membres[i];
+    var ini = ((m.nom||m.email||'M').split(' ')).map(function(w){ return w[0]; }).join('').slice(0,2).toUpperCase();
+    var dj  = new Date(m.created_at).toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'});
+    var { count: nb } = await _sb.from('commandes').select('id',{count:'exact',head:true}).eq('user_id', m.id);
+    html += '<div class="membre-card"><div class="membre-av">'+ini+'</div><div style="flex:1;min-width:0;"><div class="membre-name">'+escHtml(m.nom||m.email||'—')+'</div><div class="membre-meta">Depuis le '+dj+'</div></div><div class="membre-badge">'+(nb||0)+' cmd'+((nb||0)>1?'s':'')+'</div></div>';
+  }
+  el.innerHTML = html;
+}
+function copyRefLink() {
+  var link = document.getElementById('refLinkDisplay').textContent;
+  if (!link || link === '—') return;
+  navigator.clipboard.writeText(link).then(function(){ showToast('✅ Lien copié !'); }).catch(function(){ showToast('❌ Copie impossible'); });
+}
+function shareRefWhatsApp() {
+  var link = document.getElementById('refLinkDisplay').textContent;
+  if (!link || link === '—') return;
+  var msg = '🛍️ *SinoMarket BF* — La Chine au Burkina Faso !\n\nInscrivez-vous et commandez directement depuis la Chine 🇨🇳 → 🇧🇫\n\n👉 '+link+'\n\nPaiement : Wave · Orange Money · Moov Money 📱';
+  window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
+}
+
+// ══ PROFIL STATS ═════════════════════════════
+async function loadProfilStats() {
+  if (!_partenaire) return;
+  var { count: nb1 } = await _sb.from('commandes').select('id',{count:'exact',head:true}).eq('partenaire_id', _partenaire.id);
+  var { count: nb2 } = await _sb.from('profils').select('id',{count:'exact',head:true}).eq('partenaire_id', _partenaire.id);
+  var { count: nb3 } = await _sb.from('commandes').select('id',{count:'exact',head:true}).eq('partenaire_id', _partenaire.id).eq('statut','livre');
+  document.getElementById('pStatCmds').textContent   = nb1 || 0;
+  document.getElementById('pStatEquipe').textContent = nb2 || 0;
+  document.getElementById('pStatLivrees').textContent= nb3 || 0;
+}
+
+// ══ INIT ═════════════════════════════════════
+window.addEventListener('DOMContentLoaded', function() {
+  initSplash();
+  _sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  _sb.auth.getSession().then(function(r) {
+    var session = r.data && r.data.session;
+    if (session) { _user = session.user; onLogin(); }
+    else { showAuth(); }
+  }).catch(function() { showAuth(); });
+  _sb.auth.onAuthStateChange(function(event) {
+    if (event === 'SIGNED_OUT') { _user = null; _partenaire = null; _allCmds = []; showAuth(); }
+  });
+});
+</script>
+</body>
+</html>
